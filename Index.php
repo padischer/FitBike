@@ -1,13 +1,6 @@
 <?php
-
-$bike = filter_input(INPUT_GET, "name", FILTER_SANITIZE_STRING);
-$bikestate = filter_input(INPUT_GET, "state", FILTER_SANITIZE_STRING);
-$newbike = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
-$newemail = filter_input(INPUT_POST, "email", FILTER_SANITIZE_STRING);
-$newtelefon = filter_input(INPUT_POST, "telefon", FILTER_SANITIZE_STRING);
-$newmemberstate = filter_input(INPUT_POST, "memberstate", FILTER_SANITIZE_STRING);
-$newrent = filter_input(INPUT_POST, "rentDate", FILTER_SANITIZE_STRING);
-
+include ('../model/database.php');
+include ('../model/fitbike_db.php');
 ?>
 
 
@@ -21,21 +14,36 @@ $newrent = filter_input(INPUT_POST, "rentDate", FILTER_SANITIZE_STRING);
     <title>Document</title>
     <link rel='stylesheet' href="../css/main.css">
 </head>
+<header>
+    <h1>Bike Ausleihe</h1>
+</header>
+
 <body>
 
-<section>
+<div>
     <h2>Select Data / Read Data</h2>
     <form action="." method="GET">
         <input type="hidden" name="action" value="select">
         <label for="bike">Bike:</label>
         <select id="bike" name="Bike" required>
-            <option>Test1</option>
-            <option>Test2</option>
+
+            <?php
+
+
+            $bikelist = select_all_bikes();
+            foreach ($bikelist as $bike){
+                echo "<option>".$bike["name"]."</option>";
+            }
+
+            ?>
+
+
+
         </select>
         <button>Submit</button>
     </form>
-</section>
-<section>
+</div>
+<div>
     <h2>Insert Data / Create Data</h2>
     <form action="." method="POST">
         <input type="hidden" name="action" value="insert">
@@ -53,9 +61,15 @@ $newrent = filter_input(INPUT_POST, "rentDate", FILTER_SANITIZE_STRING);
             <option>Gold</option>
         </select><br>
         <label for="rentBike">Ausgeliehenes Bike:</label>
+        <select id="rentBike" name="RentBike", required>
+
+
+        </select>
+
+
         <input type="text" id="rentBike" name="RentBike" required><br>
-        <button>Submit</button>
+        <button id="boton">Submit</button>
     </form>
-</section>
+</div>
 </body>
 </html>
