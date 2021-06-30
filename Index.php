@@ -1,6 +1,9 @@
+
 <?php
-include ('../model/database.php');
-include ('../model/fitbike_db.php');
+include ('model/database.php');
+?>
+<?php
+include ('model/fitbike_db.php');
 ?>
 
 
@@ -12,7 +15,7 @@ include ('../model/fitbike_db.php');
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel='stylesheet' href="../css/main.css">
+    <link rel='stylesheet' href="css/main.css">
 </head>
 <header>
     <h1>Bike Ausleihe</h1>

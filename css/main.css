@@ -4,3 +4,36 @@ html {
 
 }
 
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header,
+form {
+    margin-bottom: 20px;
+}
+
+header {
+    border-bottom: 1px solid #000;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, button {
+    padding: 0.5rem;
+}
+
+input {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+button {
+    color: #fff;
+    background: dodgerblue;
+}
