@@ -1,11 +1,8 @@
-
+```
 <?php
-include ('model/database.php');
+include('model/database.php');
+include('model/fitbike_db.php');
 ?>
-<?php
-include ('model/fitbike_db.php');
-?>
-
 
 <!doctype html>
 <html lang="en">
@@ -22,57 +19,70 @@ include ('model/fitbike_db.php');
 </header>
 
 <body>
-
 <div>
-    <h2>Select Data / Read Data</h2>
-    <form action="." method="GET">
+    <h2>Informationen</h2>
+    <form action="../../../../Users/moizj/OneDrive%20-%20Kt.%20SG%20BLD/KSB%20IMS/2.%20Jahr/Informatik/Modul%20307/FitBike-master" method="GET">
         <input type="hidden" name="action" value="select">
-        <label for="bike">Bike:</label>
+        <label for="bike">Ausgeliehenes Bike:</label>
         <select id="bike" name="Bike" required>
-
+            <option>--Bitte Auswählen--</option>
             <?php
-
-
-            $bikelist = select_all_bikes();
+            $bikelist = select_all_lendedbikes();
             foreach ($bikelist as $bike){
                 echo "<option>".$bike["name"]."</option>";
             }
-
             ?>
-
-
-
         </select>
-        <button>Submit</button>
     </form>
-</div>
-<div>
-    <h2>Insert Data / Create Data</h2>
-    <form action="." method="POST">
+    <form action="../../../../Users/moizj/OneDrive%20-%20Kt.%20SG%20BLD/KSB%20IMS/2.%20Jahr/Informatik/Modul%20307/FitBike-master" method="POST">
         <input type="hidden" name="action" value="insert">
         <label for="name">Client Name:</label>
         <input type="text" id="name" name="Name" required><br>
         <label for="email">E-Mail:</label>
         <input type="text" id="email" name="Email" required><br>
-        <label for="telefon">Tekefon:</label>
-        <input type="text" id="telefon" name="Telefon"><br>
-        <label for="mitglied">Mitglied-Status:</label>
-        <select id="mitglied" name="Mitglied" required>
-            <option>Keine</option>
-            <option>Bronze</option>
-            <option>Silber</option>
-            <option>Gold</option>
+        <label for="telephone">Telephone:</label>
+        <input type="text" id="telephone" name="Telephone"><br>
+        <label for="member">Membership-Status:</label>
+        <select id="member" name="Member" required>
+            <option>--Bitte Auswählen--</option>
+            <?php
+            $memberships = select_membership();
+            foreach ($memberships as $membership){
+                echo "<option>".$membership["membership"]."</option>";
+            }
+            ?>
         </select><br>
-        <label for="rentBike">Ausgeliehenes Bike:</label>
-        <select id="rentBike" name="RentBike", required>
-
-
-        </select>
-
-
-        <input type="text" id="rentBike" name="RentBike" required><br>
-        <button id="boton">Submit</button>
+        <label for="rentBike">Verfügbares Bike:</label>
+        <select id="rentBike" name="RentBike" , required>
+            <option>--Bitte Auswählen--</option>
+            <?php
+            $bikelist = select_all_freebikes();
+            foreach ($bikelist as $bike){
+                echo "<option>".$bike["name"]."</option>";
+            }
+            ?>
+        </select><br>
+        <?php
+        $name = filter_input(INPUT_POST, 'Name', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'Email', FILTER_SANITIZE_EMAIL);
+        $telephone = filter_input(INPUT_POST, 'Telephone', FILTER_SANITIZE_STRING);
+        insert_clientData($name,$email,$telephone);
+        if ($name == NULL && $email == NULL && $telephone == NULL){
+            echo "no Data";
+            echo $name;
+            echo $email;
+            echo $telephone;
+        }else{
+            echo "where server";
+            echo $name;
+            echo $email;
+            echo $telephone;
+            insert_clientData($name,$email,$telephone);
+        }
+        ?>
+        <button id="botton">Submit</button>
     </form>
 </div>
 </body>
 </html>
+```
