@@ -11,7 +11,7 @@ include('model/fitbike_db.php');
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>FitBike</title>
     <link rel='stylesheet' href="css/main.css">
 </head>
 <header>
@@ -34,10 +34,8 @@ include('model/fitbike_db.php');
 
             <?php
             $memberships = select_membership();
-            $foreachcounter = 0;
             foreach ($memberships as $membership){
-                $foreachcounter++;
-                echo "<option value='$foreachcounter'>".$membership["membershipstatus"]."</option>";
+                echo "<option>".$membership["membershipstatus"]."</option>";
             }
             ?>
         </select><br>
@@ -57,11 +55,17 @@ include('model/fitbike_db.php');
         $name = filter_input(INPUT_POST, 'Name', FILTER_SANITIZE_STRING);
         $email = filter_input(INPUT_POST, 'Email', FILTER_SANITIZE_EMAIL);
         $telephone = filter_input(INPUT_POST, 'Telephone', FILTER_SANITIZE_STRING);
-        $membership = $_POST['Member'];
-        $membership1 = get_membershipID($membership);
-        $insert = insert_clientData($name, $email, $telephone, $membership1);
+
+        If (isset ($_POST['Member']))  {
+            $membership=$_POST['Member'];
+            $membership1 = $membership;
+        }else{
+            $membership1 = "keine";
+        }
+        $membership2 = get_membershipID($membership1);
+        $insert = insert_clientData($name, $email, $telephone, $membership2);
         ?>
-        <input type="submit", name="insert", value="insert", onclick=<?= $insert() ?>>
+        <input type="submit" name="insert" value="insert" onclick=<?= $insert() ?>>
         <button id="botton">Submit</button>
 
     </form>
@@ -74,7 +78,7 @@ include('model/fitbike_db.php');
         <select id="bike" name="Bike" required>
             <option>--Bitte Auswählen--</option>
             <?php
-            $bikelist = select_all_lendedbikes();
+            $bikelist = select_all_lentbikes();
             foreach ($bikelist as $bike){
                 echo "<option>".$bike["name"]."</option>";
             }

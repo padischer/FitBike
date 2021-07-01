@@ -21,7 +21,7 @@ function select_all_lentbikes(): array
 function select_membership(): array
 {
     global $db;
-    $query = 'SELECT  membershipstatus FROM membership';
+    $query = 'SELECT membershipstatus FROM membership';
     $statement = $db->prepare($query);
     $statement->execute();
     return $statement->fetchAll();
