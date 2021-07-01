@@ -1,4 +1,4 @@
-```
+
 <?php
 include('model/database.php');
 include('model/fitbike_db.php');
@@ -15,7 +15,7 @@ include('model/fitbike_db.php');
     <link rel='stylesheet' href="css/main.css">
 </head>
 <header>
-    <h1>Bike Ausleihe</h1>
+    <h1>Bike lending</h1>
 </header>
 
 <body>
@@ -34,8 +34,10 @@ include('model/fitbike_db.php');
 
             <?php
             $memberships = select_membership();
+            $foreachcounter = 0;
             foreach ($memberships as $membership){
-                echo "<option>".$membership["membership"]."</option>";
+                $foreachcounter++;
+                echo "<option value='$foreachcounter'>".$membership["membershipstatus"]."</option>";
             }
             ?>
         </select><br>
@@ -55,11 +57,11 @@ include('model/fitbike_db.php');
         $name = filter_input(INPUT_POST, 'Name', FILTER_SANITIZE_STRING);
         $email = filter_input(INPUT_POST, 'Email', FILTER_SANITIZE_EMAIL);
         $telephone = filter_input(INPUT_POST, 'Telephone', FILTER_SANITIZE_STRING);
-        $memberShip = filter_input(INPUT_POST, 'Member', FILTER_SANITIZE_NUMBER_INT);
-        $membership1 = get_membershipID($memberShip);
+        $membership = $_POST['Member'];
+        $membership1 = get_membershipID($membership);
         $insert = insert_clientData($name, $email, $telephone, $membership1);
         ?>
-        <input type="submit", name="insert", value="insert", onclick=<?= $insert ?>>
+        <input type="submit", name="insert", value="insert", onclick=<?= $insert() ?>>
         <button id="botton">Submit</button>
 
     </form>
@@ -82,4 +84,3 @@ include('model/fitbike_db.php');
 </div>
 </body>
 </html>
-```

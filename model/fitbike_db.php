@@ -1,6 +1,5 @@
+
 <?php
-
-
 function select_all_freebikes(): array
 {
     global $db;
@@ -10,7 +9,7 @@ function select_all_freebikes(): array
     return $statement->fetchAll();
 }
 
-function select_all_lendedbikes(): array
+function select_all_lentbikes(): array
 {
     global $db;
     $query = "SELECT * FROM bikes WHERE status = 'Ausgehliehen'";
@@ -22,7 +21,7 @@ function select_all_lendedbikes(): array
 function select_membership(): array
 {
     global $db;
-    $query = 'SELECT * FROM membership';
+    $query = 'SELECT  membershipstatus FROM membership';
     $statement = $db->prepare($query);
     $statement->execute();
     return $statement->fetchAll();
@@ -45,7 +44,7 @@ function insert_clientData($clientname, $email, $phonenumber, $membership) : arr
 function get_membershipID($membership) : int
 {
     global $db;
-    $query = "SELECT membershipID FROM membership WHERE membership = $membership";
+    $query = "SELECT membershipID FROM membership WHERE membershipstatus = $membership";
     $statement = $db ->prepare($query);
     $statement->execute();
     return $statement->fetch();
