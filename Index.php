@@ -20,21 +20,8 @@ include('model/fitbike_db.php');
 
 <body>
 <div>
-    <h2>Informationen</h2>
-    <form action="../../../../Users/moizj/OneDrive%20-%20Kt.%20SG%20BLD/KSB%20IMS/2.%20Jahr/Informatik/Modul%20307/FitBike-master" method="GET">
-        <input type="hidden" name="action" value="select">
-        <label for="bike">Ausgeliehenes Bike:</label>
-        <select id="bike" name="Bike" required>
-            <option>--Bitte Auswählen--</option>
-            <?php
-            $bikelist = select_all_lendedbikes();
-            foreach ($bikelist as $bike){
-                echo "<option>".$bike["name"]."</option>";
-            }
-            ?>
-        </select>
-    </form>
-    <form action="../../../../Users/moizj/OneDrive%20-%20Kt.%20SG%20BLD/KSB%20IMS/2.%20Jahr/Informatik/Modul%20307/FitBike-master" method="POST">
+    <h2>lend Bike</h2>
+    <form method="POST">
         <input type="hidden" name="action" value="insert">
         <label for="name">Client Name:</label>
         <input type="text" id="name" name="Name" required><br>
@@ -44,7 +31,7 @@ include('model/fitbike_db.php');
         <input type="text" id="telephone" name="Telephone"><br>
         <label for="member">Membership-Status:</label>
         <select id="member" name="Member" required>
-            <option>--Bitte Auswählen--</option>
+
             <?php
             $memberships = select_membership();
             foreach ($memberships as $membership){
@@ -53,8 +40,8 @@ include('model/fitbike_db.php');
             ?>
         </select><br>
         <label for="rentBike">Verfügbares Bike:</label>
-        <select id="rentBike" name="RentBike" , required>
-            <option>--Bitte Auswählen--</option>
+        <select id="rentBike" name="RentBike">
+
             <?php
             $bikelist = select_all_freebikes();
             foreach ($bikelist as $bike){
@@ -62,25 +49,35 @@ include('model/fitbike_db.php');
             }
             ?>
         </select><br>
+
+
         <?php
         $name = filter_input(INPUT_POST, 'Name', FILTER_SANITIZE_STRING);
         $email = filter_input(INPUT_POST, 'Email', FILTER_SANITIZE_EMAIL);
         $telephone = filter_input(INPUT_POST, 'Telephone', FILTER_SANITIZE_STRING);
-        insert_clientData($name,$email,$telephone);
-        if ($name == NULL && $email == NULL && $telephone == NULL){
-            echo "no Data";
-            echo $name;
-            echo $email;
-            echo $telephone;
-        }else{
-            echo "where server";
-            echo $name;
-            echo $email;
-            echo $telephone;
-            insert_clientData($name,$email,$telephone);
-        }
+        $memberShip = filter_input(INPUT_POST, 'Member', FILTER_SANITIZE_NUMBER_INT);
+        $membership1 = get_membershipID($memberShip);
+        $insert = insert_clientData($name, $email, $telephone, $membership1);
         ?>
+        <input type="submit", name="insert", value="insert", onclick=<?= $insert ?>>
         <button id="botton">Submit</button>
+
+    </form>
+</div>
+<div>
+    <h1>Delete or Mutate lending</h1>
+    <form method="GET">
+        <input type="hidden" name="action" value="select">
+        <label for="bike">lent Bike:</label>
+        <select id="bike" name="Bike" required>
+            <option>--Bitte Auswählen--</option>
+            <?php
+            $bikelist = select_all_lendedbikes();
+            foreach ($bikelist as $bike){
+                echo "<option>".$bike["name"]."</option>";
+            }
+            ?>
+        </select>
     </form>
 </div>
 </body>

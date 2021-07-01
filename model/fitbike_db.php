@@ -1,5 +1,6 @@
 <?php
 
+
 function select_all_freebikes(): array
 {
     global $db;
@@ -21,21 +22,31 @@ function select_all_lendedbikes(): array
 function select_membership(): array
 {
     global $db;
-    $query = "SELECT * FROM membership";
+    $query = 'SELECT * FROM membership';
     $statement = $db->prepare($query);
     $statement->execute();
     return $statement->fetchAll();
 }
 
-function insert_clientData($clientname, $email, $phonenumber)
+function insert_clientData($clientname, $email, $phonenumber, $membership) : array
+{
+
+    global $db;
+    $query2 = 'INSERT INTO client (name, email, phonenumber, membership) VALUES (:clientname, :email, :phonenumber, :membership)';
+    $statement = $db->prepare($query2);
+    $statement->bindValue(':clientname', $clientname);
+    $statement->bindValue(':email', $email);
+    $statement->bindValue(':phonenumber', $phonenumber);
+    $statement->bindValue(':membership', $membership);
+    $statement->execute();
+    return $statement->fetchAll();
+}
+
+function get_membershipID($membership) : int
 {
     global $db;
-    $query2 = 'INSERT INTO client (name, email, phonenumber) VALUES (:clientname, :email, :phonenumber)';
-    $statement = $db->prepare($query2);
-    $statement->bindValue(':clientname', $clientname, false);
-    $statement->bindValue(':email', $email, false);
-    $statement->bindValue(':phonenumber', $phonenumber, false);
-    //$statement->bindValue(':membership', $membership);
+    $query = "SELECT membershipID FROM membership WHERE membership = $membership";
+    $statement = $db ->prepare($query);
     $statement->execute();
-    $statement->closeCursor();
+    return $statement->fetch();
 }
