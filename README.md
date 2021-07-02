@@ -1,2 +1,2 @@
-# FitBike
-create_database contains commands that must be used, to create and fill the database
+# Important
+create_database.sql contains commands that must be used, to create and fill the database
