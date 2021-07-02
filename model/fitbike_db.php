@@ -44,8 +44,10 @@ function insert_clientData($clientname, $email, $phonenumber, $membership) : arr
 function get_membershipID($membership) : int
 {
     global $db;
-    $query = "SELECT membershipID FROM membership WHERE membershipstatus = $membership";
+    $query = "SELECT membershipID FROM membership WHERE membershipstatus = :membership";
     $statement = $db ->prepare($query);
+    $statement->bindValue(':$membership', $membership);
     $statement->execute();
-    return $statement->fetch();
+    $result = $statement->fetch();
+    return $result;
 }

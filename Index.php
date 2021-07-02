@@ -20,7 +20,7 @@ include('model/fitbike_db.php');
 
 <body>
 <div>
-    <h2>lend Bike</h2>
+    <h2>Lend Bike</h2>
     <form method="POST">
         <input type="hidden" name="action" value="insert">
         <label for="name">Client Name:</label>
@@ -31,7 +31,7 @@ include('model/fitbike_db.php');
         <input type="text" id="telephone" name="Telephone"><br>
         <label for="member">Membership-Status:</label>
         <select id="member" name="Member" required>
-
+            <option>--Bitte Auswählen--</option>
             <?php
             $memberships = select_membership();
             foreach ($memberships as $membership){
@@ -39,9 +39,9 @@ include('model/fitbike_db.php');
             }
             ?>
         </select><br>
-        <label for="rentBike">Verfügbares Bike:</label>
+        <label for="rentBike">Available Bike:</label>
         <select id="rentBike" name="RentBike">
-
+            <option>--Bitte Auswählen--</option>
             <?php
             $bikelist = select_all_freebikes();
             foreach ($bikelist as $bike){
@@ -52,6 +52,7 @@ include('model/fitbike_db.php');
 
 
         <?php
+        /*
         $name = filter_input(INPUT_POST, 'Name', FILTER_SANITIZE_STRING);
         $email = filter_input(INPUT_POST, 'Email', FILTER_SANITIZE_EMAIL);
         $telephone = filter_input(INPUT_POST, 'Telephone', FILTER_SANITIZE_STRING);
@@ -64,9 +65,12 @@ include('model/fitbike_db.php');
         }
         $membership2 = get_membershipID($membership1);
         $insert = insert_clientData($name, $email, $telephone, $membership2);
+        onclick=<?= $insert() ?>
+        */
         ?>
-        <input type="submit" name="insert" value="insert" onclick=<?= $insert() ?>>
-        <button id="botton">Submit</button>
+
+        <!--<input type="submit" name="insert" value="insert" >-->
+        <button>Submit</button>
 
     </form>
 </div>
@@ -83,7 +87,9 @@ include('model/fitbike_db.php');
                 echo "<option>".$bike["name"]."</option>";
             }
             ?>
-        </select>
+        </select><br>
+        <button>Delete</button>
+        <button>Mutate</button>
     </form>
 </div>
 </body>
